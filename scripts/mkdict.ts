@@ -15,6 +15,7 @@ let ja_only = new Array<number>();
 let cn_only = new Array<number>();
 let tw_only = new Array<number>();
 let non_ja = new Array<number>();
+let zh = new Array<number>();
 
 
 const on_keybreak = () => {
@@ -27,9 +28,11 @@ const on_keybreak = () => {
     non_ja.push(x);
 
     if (curr_langs.cn) {
+      zh.push(x);
       if (!curr_langs.tw && !curr_langs.other)
         cn_only.push(x);
     } else if (curr_langs.tw) {
+      zh.push(x);
       if (!curr_langs.other)
         tw_only.push(x);
     }
@@ -40,6 +43,7 @@ const on_keybreak = () => {
 
 
 const build_regexp = (xs: Array<number>) => {
+  /*
   var j = 0;
   var regexp: string = '[\\u{' + xs[j].toString(16) + '}';
   for (var i: number = 0; i < xs.length; ++i) {
@@ -54,7 +58,7 @@ const build_regexp = (xs: Array<number>) => {
       }
     }
   }
-
+   */
   /*
   var j = 0;
   var regexp: string = '[' + String.fromCodePoint(xs[j]);
@@ -70,8 +74,10 @@ const build_regexp = (xs: Array<number>) => {
       }
     }
   }
-   */
   console.log(regexp + ']');
+   */
+  console.log('[' + xs.map(x => String.fromCodePoint(x)).join('') + ']');
+
 }
 
 
@@ -114,10 +120,11 @@ readline.createInterface({
     if (curr_code !== null)
       on_keybreak();
 
-    build_regexp(ja_only);
-    build_regexp(cn_only);
-    build_regexp(tw_only);
-    build_regexp(non_ja);
+    //build_regexp(ja_only);
+    //build_regexp(cn_only);
+    //build_regexp(tw_only);
+    build_regexp(zh);
+    //build_regexp(non_ja);
     //console.log(ja_only);
     //console.log(cn_only);
     //console.log(tw_only);
